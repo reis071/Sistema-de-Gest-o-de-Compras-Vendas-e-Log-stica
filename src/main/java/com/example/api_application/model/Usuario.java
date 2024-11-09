@@ -3,12 +3,10 @@ package com.example.api_application.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.HashSet;
-import java.util.Set;
+
 import java.util.UUID;
 
 import java.util.Objects;
-import com.example.api_application.model.Grupo;
 
 @Entity
 @Data
@@ -25,15 +23,15 @@ public class Usuario {
 
     private String senha;
 
-    @ManyToMany(mappedBy = "usuarios")
-    private Set< Grupo > grupo = new HashSet<>();
+    private String papel;
 
     public Usuario() {}
 
-    public Usuario( String nome, String email, String senha) {
+    public Usuario( String nome, String email, String senha, String papel) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
+        this.papel = papel;
     }
 
     @Override
