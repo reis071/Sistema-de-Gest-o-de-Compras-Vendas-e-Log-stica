@@ -19,6 +19,7 @@ public class ApiAplicationUserDetailsService implements UserDetailsService {
 
     private final UsuarioRepository usuarioRepository;
 
+    //Carrega as credenciais do usuario
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow(
