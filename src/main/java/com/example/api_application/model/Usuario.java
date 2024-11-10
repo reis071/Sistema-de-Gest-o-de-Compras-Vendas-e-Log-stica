@@ -2,6 +2,8 @@ package com.example.api_application.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 
 import java.util.UUID;
@@ -9,7 +11,8 @@ import java.util.UUID;
 import java.util.Objects;
 
 @Entity
-@Data
+@Getter
+@Setter
 public class Usuario {
 
 
@@ -23,16 +26,7 @@ public class Usuario {
 
     private String senha;
 
-    private String papel;
-
-    public Usuario() {}
-
-    public Usuario( String nome, String email, String senha, String papel) {
-        this.nome = nome;
-        this.email = email;
-        this.senha = senha;
-        this.papel = papel;
-    }
+    private String role;
 
     @Override
     public boolean equals(Object o) {

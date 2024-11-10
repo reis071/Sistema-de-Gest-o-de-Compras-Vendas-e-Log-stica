@@ -1,4 +1,4 @@
-package com.example.api_application.service;
+package com.example.api_application.security;
 
 import com.example.api_application.model.Usuario;
 import com.example.api_application.repository.UsuarioRepository;
@@ -15,16 +15,18 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CarregarCredenciaisUsuarioService implements UserDetailsService {
+public class ApiAplicationUserDetailsService implements UserDetailsService {
 
     private final UsuarioRepository usuarioRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Usuario usuario = usuarioRepository.findByEmail(username).orElseThrow(
-                () -> new UsernameNotFoundException("Usuario com email:" + username + " nao encontrado"));
-        List<GrantedAuthority> authorities = List.of( new SimpleGrantedAuthority(usuario.getPapel()));
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow(
+                () -> new UsernameNotFoundException("Usuario com email:" + email + " nao encontrado"));
+
+        List<GrantedAuthority> authorities = List.of( new SimpleGrantedAuthority(usuario.getRole()));
 
         return new User(usuario.getEmail(), usuario.getSenha(), authorities);
     }
+
 }
