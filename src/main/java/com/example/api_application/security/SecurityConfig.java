@@ -23,7 +23,8 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(AbstractHttpConfigurer::disable).
+        http.sessionManagement(smc -> smc.invalidSessionUrl("/sessionInvalid").maximumSessions(1).maxSessionsPreventsLogin(true))
+                .csrf(AbstractHttpConfigurer::disable).
                 authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/usuario/cadastrar").permitAll()
                         .anyRequest().authenticated()
@@ -38,3 +39,11 @@ public class SecurityConfig {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 }
+
+
+
+
+
+
+
+
