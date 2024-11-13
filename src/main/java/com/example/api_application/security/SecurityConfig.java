@@ -29,7 +29,7 @@ public class SecurityConfig {
                         .requestMatchers("/usuario/cadastrar").permitAll()
                         .anyRequest().authenticated()
                 );
-        http.httpBasic(withDefaults());
+        http.httpBasic(hbc -> hbc.authenticationEntryPoint(new CustomExceptionBasicAuth()));
 
         return http.build();
     }
