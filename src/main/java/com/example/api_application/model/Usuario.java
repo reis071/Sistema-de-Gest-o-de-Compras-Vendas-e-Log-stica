@@ -1,11 +1,14 @@
 package com.example.api_application.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 import java.util.Objects;
@@ -24,9 +27,12 @@ public class Usuario {
 
     private String email;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String senha;
 
-    private String role;
+    @ManyToMany(mappedBy = "permissao",fetch = FetchType.EAGER)
+    private Set<Permissao> permissoes =  new HashSet<>();
+
 
     @Override
     public boolean equals(Object o) {
