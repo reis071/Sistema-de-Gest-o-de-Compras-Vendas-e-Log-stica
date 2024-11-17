@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -25,9 +27,11 @@ public class ApiAplicationUserDetailsService implements UserDetailsService {
         Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow(
                 () -> new UsernameNotFoundException("Usuario com email:" + email + " nao encontrado"));
 
-        List<GrantedAuthority> authorities = List.of( new SimpleGrantedAuthority(usuario.getRole()));
+        List<GrantedAuthority> permissao = usuario.getPermissoes().
+                stream().
+                map( permissaoConfig -> new SimpleGrantedAuthority( permissaoConfig.getTipo())).collect(Collectors.toList());
 
-        return new User(usuario.getEmail(), usuario.getSenha(), authorities);
+        return new User(usuario.getEmail(), usuario.getSenha(), permissao);
     }
 
 }
