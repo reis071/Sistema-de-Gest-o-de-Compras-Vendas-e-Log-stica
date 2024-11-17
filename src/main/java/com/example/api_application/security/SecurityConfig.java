@@ -29,7 +29,9 @@ public class SecurityConfig {
                         .requestMatchers("/usuario/cadastrar").permitAll()
                         .anyRequest().authenticated()
                 );
+
         http.httpBasic(hbc -> hbc.authenticationEntryPoint(new CustomExceptionBasicAuth()));
+        http.exceptionHandling(ehc -> ehc.accessDeniedHandler(new CustomAccessDeniedHandler()));
 
         return http.build();
     }
