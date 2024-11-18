@@ -34,12 +34,12 @@ public class SecurityConfig {
                 .securityContext(contextConfig -> contextConfig.requireExplicitSave(false))
                 .sessionManagement(sessionConfig -> sessionConfig.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                 .csrf(csrfConfig -> csrfConfig.csrfTokenRequestHandler(csrfTokenRequestAttributeHandler)
-                        .ignoringRequestMatchers( "/usuario/cadastrar")
+                        .ignoringRequestMatchers( "/usuario/cadastrar","/permissao/cadastrar","/permissao/usuario")
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
                 .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
                 .requiresChannel(rcc -> rcc.anyRequest().requiresInsecure()) // Only HTTP
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/usuario/cadastrar").permitAll()
+                        .requestMatchers("/usuario/cadastrar","/permissao/cadastrar", "/permissao/usuario").permitAll()
                         .anyRequest().authenticated()
                 );
 

@@ -20,13 +20,8 @@ public class Permissao {
 
     private String tipo;
 
-    @ManyToMany
-    @JoinTable(
-            name = "permissao_usuario",
-            joinColumns = @JoinColumn(name = "permissao_id"),
-            inverseJoinColumns = @JoinColumn(name = "usuario_id")
-    )
-    @JsonIgnore
+    @ManyToMany(mappedBy = "permissoes", fetch = FetchType.LAZY)
+    @JsonIgnore // Evita loops cíclicos durante a serialização
     private Set<Usuario> usuarios = new HashSet<>();
 
     @Override
